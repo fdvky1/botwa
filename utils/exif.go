@@ -9,7 +9,7 @@ import (
 func CreateExif(fileName string, packname string, author string) *string {
 
 	jsonData := map[string]interface{}{
-		"sticker-pack-id":       "fdb.my.id 1456",
+		"sticker-pack-id":       "fdm.my.id",
 		"sticker-pack-name":      packname,
 		"sticker-pack-publisher": author,
 		"android-app-store-link": "https://play.google.com/store/apps/details?id=com.rayark.cytus2",
