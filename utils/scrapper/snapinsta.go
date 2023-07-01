@@ -17,7 +17,7 @@ type SnapInstaResponse struct {
 }
 
 func GetSnapInsta(instagram string) (response *SnapInstaResponse, err error) {
-	//defer TimeElapsed("Scrap SnapInsta")()
+	defer TimeElapsed("Scrap SnapInsta")()
 
 	client := NewCloudflareBypass()
 	resp, err := client.R().
