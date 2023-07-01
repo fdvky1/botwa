@@ -23,9 +23,10 @@ var add = &command.Command{
 			if ok {
 				found, err := ctx.Client.IsOnWhatsApp([]string{jid.User})
 				if err == nil && len(found) != 0 {
-					Members := make(map[types.JID]whatsmeow.ParticipantChange)
-					Members[jid] = whatsmeow.ParticipantChangeAdd
-					ctx.Client.UpdateGroupParticipants(ctx.MessageInfo.Chat, Members)
+					Member := map[types.JID]whatsmeow.ParticipantChange{
+						jid: whatsmeow.ParticipantChangeAdd,
+					}
+					ctx.Client.UpdateGroupParticipants(ctx.MessageInfo.Chat, Member)
 				}
 			}
 		}

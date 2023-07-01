@@ -20,9 +20,10 @@ var kick = &command.Command{
 		}
 		for _, v := range util.ParseMentionedJid(ctx.Message) {
 			jid, _ := waTypes.ParseJID(v)
-			Members := make(map[waTypes.JID]whatsmeow.ParticipantChange)
-			Members[jid] = whatsmeow.ParticipantChangeRemove
-			ctx.Client.UpdateGroupParticipants(ctx.MessageInfo.Chat, Members)
+			Member := map[waTypes.JID]whatsmeow.ParticipantChange{
+				jid: whatsmeow.ParticipantChangeRemove,
+			}
+			ctx.Client.UpdateGroupParticipants(ctx.MessageInfo.Chat, Member)
 		}
 		return nil
 	},

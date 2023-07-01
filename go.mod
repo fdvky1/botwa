@@ -3,13 +3,22 @@ module botwa
 go 1.20
 
 require (
+	github.com/PuerkitoBio/goquery v1.8.1
+	github.com/go-resty/resty/v2 v2.7.0
 	github.com/itzngga/Roxy v0.0.0-20230627095442-fa34df4e91bc
 	github.com/mattn/go-sqlite3 v1.14.17
 	go.mau.fi/whatsmeow v0.0.0-20230610124725-5dd0baf43eda
 )
 
 require (
+	github.com/andybalholm/cascadia v1.3.1 // indirect
+	github.com/davecgh/go-spew v1.1.1 // indirect
+)
+
+require (
 	filippo.io/edwards25519 v1.0.0 // indirect
+	github.com/DaRealFreak/cloudflare-bp-go v1.0.4
+	github.com/EDDYCJY/fake-useragent v0.2.0
 	github.com/alitto/pond v1.8.3 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.2 // indirect
 	github.com/google/uuid v1.3.0 // indirect

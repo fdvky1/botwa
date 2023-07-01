@@ -31,11 +31,14 @@ var sticker = &command.Command{
 			if !ok {
 				return ctx.GenerateReplyMessage("Error while converting image")
 			}
-		}else{
+		}else if(ctx.Message.GetVideoMessage() != nil || util.ParseQuotedMessage(ctx.Message).GetVideoMessage() != nil){
 			ok := Video2Webp(fileName)
 			if !ok {
 				return ctx.GenerateReplyMessage("Error while converting video")
 			}
+		} else {
+			os.Remove(fileName)
+			return ctx.GenerateReplyMessage("Invalid")
 		}
 		splited := strings.Split(strings.Join(ctx.Arguments, " "), "|")
 		if len(splited) >= 2{
