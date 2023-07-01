@@ -1,8 +1,10 @@
 package cmd
 
 import (
+	"botwa/utils"
 	"botwa/utils/scrapper"
 	"fmt"
+	"strconv"
 
 	"github.com/itzngga/Roxy/command"
 	"github.com/itzngga/Roxy/embed"
@@ -14,22 +16,43 @@ var tiktok = &command.Command{
 	Aliases:      []string{"tt"},
 	Description:  "Download video from Tiktok",
 	RunFunc: func(ctx *command.RunFuncContext) *waProto.Message {
-		if len(ctx.Arguments) == 0 {
-			return ctx.GenerateReplyMessage("Url?")
+		var link string
+		command.NewUserQuestion(ctx).
+			SetQuestion("Please send media url link", &link).
+			WithLikeEmoji().
+			ExecWithParser()
+
+		if link != "" {
+			if !utils.ParseURL(link) {
+				return ctx.GenerateReplyMessage("errors: invalid url scheme")
+			}
 		}
-		res, err := scrapper.GetSnaptik(ctx.Arguments[0])
+
+		res, err := scrapper.GetSnaptik(link)
 		if err != nil {
 			fmt.Println(err)
 			return ctx.GenerateReplyMessage("Error")
 		}
+
+		text := fmt.Sprintf("Username: %s\nDescription: %s", res.Username, res.Description)
 		
-		for _, result := range res.VideoUrl{
-			videoMessage, err := ctx.UploadVideoFromUrl(result, "")
+		videoMessage, err := ctx.UploadVideoFromUrl(res.VideoUrl[0], text)
+		if err != nil {
+			fmt.Println(err)
+			return ctx.GenerateReplyMessage("Error while uploading video")
+		}
+		ctx.SendReplyMessage(videoMessage)
+
+		for i, url := range res.ImageUrl {
+			if i > 0 {
+				text = "Slide: " + strconv.Itoa(i+1)
+			}
+			imageMessage, err := ctx.UploadImageFromUrl(url, text)
 			if err != nil {
 				fmt.Println(err)
-				return ctx.GenerateReplyMessage("Error while uploading video")
+				return ctx.GenerateReplyMessage("Error while uploading image")
 			}
-			ctx.SendReplyMessage(videoMessage)
+			ctx.SendReplyMessage(imageMessage)
 		}
 
 		return nil

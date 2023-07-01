@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"botwa/utils"
 	"botwa/utils/scrapper"
 	"fmt"
 
@@ -14,15 +15,24 @@ var ytmp3 = &command.Command{
 	Aliases:      []string{"mp3"},
 	Description:  "Download audio from YouTube",
 	RunFunc: func(ctx *command.RunFuncContext) *waProto.Message {
-		if len(ctx.Arguments) == 0 {
-			return ctx.GenerateReplyMessage("Url?")
+		var link string
+		command.NewUserQuestion(ctx).
+			SetQuestion("Please send media url link", &link).
+			WithLikeEmoji().
+			ExecWithParser()
+
+		if link != "" {
+			if !utils.ParseURL(link) {
+				return ctx.GenerateReplyMessage("errors: invalid url scheme")
+			}
 		}
-		res, err := scrapper.Y2Mate(ctx.Arguments[0])
+
+		res, err := scrapper.Y2Mate(link)
 		if err != nil {
 			fmt.Println(err)
 			return ctx.GenerateReplyMessage("Error")
 		}
-		imageMessage, err := ctx.UploadImageFromUrl(fmt.Sprintf("https://i.ytimg.com/vi/%s/0.jpg", res.Vid), fmt.Sprintf("%s\nAuthor: %s", res.Title, res.A))
+		imageMessage, err := ctx.UploadImageFromUrl(fmt.Sprintf("https://i.ytimg.com/vi/%s/0.jpg", res.Vid), fmt.Sprintf("%s\n\nChannel: %s", res.Title, res.A))
 		if err != nil {
 			fmt.Println(err)
 			return ctx.GenerateReplyMessage("Error while uploading image")

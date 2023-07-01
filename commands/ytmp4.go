@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"botwa/utils"
 	"botwa/utils/scrapper"
 	"fmt"
 
@@ -14,10 +15,19 @@ var ytmp4 = &command.Command{
 	Aliases:      []string{"mp4"},
 	Description:  "Download video from YouTube",
 	RunFunc: func(ctx *command.RunFuncContext) *waProto.Message {
-		if len(ctx.Arguments) == 0 {
-			return ctx.GenerateReplyMessage("Url?")
+		var link string
+		command.NewUserQuestion(ctx).
+			SetQuestion("Please send media url link", &link).
+			WithLikeEmoji().
+			ExecWithParser()
+
+		if link != "" {
+			if !utils.ParseURL(link) {
+				return ctx.GenerateReplyMessage("errors: invalid url scheme")
+			}
 		}
-		res, err := scrapper.Y2Mate(ctx.Arguments[0])
+
+		res, err := scrapper.Y2Mate(link)
 		if err != nil {
 			fmt.Println(err)
 			return ctx.GenerateReplyMessage("Error")

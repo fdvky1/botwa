@@ -5,13 +5,13 @@ go 1.20
 require (
 	github.com/PuerkitoBio/goquery v1.8.1
 	github.com/go-resty/resty/v2 v2.7.0
-	github.com/itzngga/Roxy v0.0.0-20230627095442-fa34df4e91bc
+	github.com/itzngga/Roxy v0.0.0-20230701151740-04b70478a7f3
 	github.com/mattn/go-sqlite3 v1.14.17
-	go.mau.fi/whatsmeow v0.0.0-20230610124725-5dd0baf43eda
+	go.mau.fi/whatsmeow v0.0.0-20230628230045-73f143bc9874
 )
 
 require (
-	github.com/andybalholm/cascadia v1.3.1 // indirect
+	github.com/andybalholm/cascadia v1.3.2 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 )
 
@@ -28,8 +28,8 @@ require (
 	github.com/zhangyunhao116/fastrand v0.3.0 // indirect
 	github.com/zhangyunhao116/skipmap v0.10.1 // indirect
 	go.mau.fi/libsignal v0.1.0 // indirect
-	golang.org/x/crypto v0.9.0 // indirect
-	golang.org/x/net v0.10.0 // indirect
-	google.golang.org/protobuf v1.30.0 // indirect
+	golang.org/x/crypto v0.10.0 // indirect
+	golang.org/x/net v0.11.0 // indirect
+	google.golang.org/protobuf v1.31.0 // indirect
 	rsc.io/qr v0.2.0 // indirect
 )
